@@ -1,0 +1,7 @@
+web/node_modules/
+web/dist/
+web/.astro/
+sources/*.pdf
+.nvm/
+*.log
+.DS_Store
