@@ -3,7 +3,7 @@
 @theme {
   --color-brand-light: #FFF9F9;
   --color-brand-primary: #0f172a;
-  --color-brand-accent: #f472b6; /* tailwind pink-400 */
+  --color-brand-accent: #db2777; /* tailwind pink-600 */
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
 }

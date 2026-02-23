@@ -9,7 +9,7 @@
     
     <!-- Text Content -->
     <div class="flex flex-col items-center text-center md:items-start md:text-left space-y-6 md:pr-12">
-      <span class="text-brand-accent uppercase tracking-[0.2em] font-medium text-xs md:text-sm animate-fade-in-up">
+      <span class="text-[#db2777] uppercase tracking-[0.2em] font-medium text-xs md:text-sm animate-fade-in-up">
         Lic. en Psicología Clínica
       </span>
       <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif text-brand-primary leading-tight mt-2">
@@ -29,14 +29,99 @@
     </div>
 
     <!-- Image -->
-    <div class="relative w-full max-w-md mx-auto md:max-w-none md:ml-auto">
-      <div class="absolute -inset-4 md:-inset-6 border border-brand-accent/30 rounded-[2.5rem] rotate-3 transform transition-transform hover:rotate-6 duration-700"></div>
+    <div class="relative w-full max-w-md mx-auto md:max-w-none md:ml-auto cursor-pointer group" id="hero-image-container">
+      <div class="absolute -inset-4 md:-inset-6 border border-brand-accent/30 rounded-[2.5rem] rotate-3 transform transition-transform group-hover:rotate-6 duration-700"></div>
       <!-- NOTE TO USER: Replace this image visually using object-position or physically via cropping if needed -->
       <img 
-        src="/Melisa-Portfolio/melisa-photo.jpeg" 
+        src="/Melisa-Portfolio/melisa-photo-small.webp" 
         alt="Melisa Carpintero" 
-        class="relative rounded-3xl object-cover object-top w-full aspect-[4/5] shadow-2xl transition duration-700 hover:shadow-brand-accent/20 filter contrast-105"
+        id="hero-image"
+        width="400"
+        height="500"
+        fetchpriority="high"
+        class="relative rounded-3xl object-cover object-top w-full aspect-[4/5] shadow-2xl transition duration-700 hover:shadow-brand-accent/20 group-hover:scale-[1.02] filter contrast-105"
       />
+      <!-- Hover Overlay indicating it's clickable -->
+      <div class="absolute inset-0 rounded-3xl bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+        </svg>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- Image Modal -->
+<div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 opacity-0 pointer-events-none transition-opacity duration-200 ease-out p-4 sm:p-8 will-change-opacity">
+  <div class="relative max-w-5xl w-full max-h-[95vh] flex items-center justify-center">
+    <!-- Close button -->
+    <button id="close-modal" aria-label="Cerrar currículum" class="absolute -top-12 right-0 sm:top-0 sm:-right-12 text-white/70 hover:text-white transition-colors p-2 z-50">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <img 
+      src="/Melisa-Portfolio/melisa-photo.webp" 
+      alt="Melisa Carpintero Curriculum" 
+      width="1000"
+      height="1250"
+      loading="lazy"
+      decoding="async"
+      class="max-w-full max-h-[95vh] object-contain rounded-xl shadow-2xl transform scale-95 translate-y-4 opacity-0 transition-all duration-300 ease-out will-change-transform"
+      id="modal-image"
+    />
+  </div>
+</div>
+
+<script>
+  const imageContainer = document.getElementById('hero-image-container');
+  const modal = document.getElementById('image-modal');
+  const closeModalBtn = document.getElementById('close-modal');
+  const modalImage = document.getElementById('modal-image');
+
+  function openModal() {
+    if (modal && modalImage) {
+      // Show backdrop
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      
+      // Animate image inwards
+      modalImage.classList.remove('scale-95', 'translate-y-4', 'opacity-0');
+      modalImage.classList.add('scale-100', 'translate-y-0', 'opacity-100');
+      
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+  }
+
+  function closeModal() {
+    if (modal && modalImage) {
+      // Animate image outwards
+      modalImage.classList.remove('scale-100', 'translate-y-0', 'opacity-100');
+      modalImage.classList.add('scale-95', 'translate-y-4', 'opacity-0');
+      
+      // Hide backdrop
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+  }
+
+  // Event Listeners
+  imageContainer?.addEventListener('click', openModal);
+  closeModalBtn?.addEventListener('click', closeModal);
+  
+  // Close when clicking outside the image
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal || e.target.parentElement === modal) {
+      closeModal();
+    }
+  });
+
+  // Close with Esc key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+</script>
